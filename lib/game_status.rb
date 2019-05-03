@@ -4,3 +4,71 @@ def position_taken?(board, index)
 end
 
 # Define your WIN_COMBINATIONS constant
+WIN_COMBINATIONS = [[0,1,2], [3,4,5], [6,7,8], [0,3,6], [1,4,7], [2,5,8], [0,4,8], [2,4,6]]
+
+def won?(board)
+  wins = WIN_COMBINATIONS.filter do |wincombo|
+
+    win_index_1 = wincombo[0]
+    win_index_2 = wincombo[1]
+    win_index_3 = wincombo[2]
+
+    position_1 = board[win_index_1]
+    position_2 = board[win_index_2]
+    position_3 = board[win_index_3]
+
+    if position_1 == "X" && position_2 == "X" && position_3 == "X"
+       true
+    elsif position_1 == "O" && position_2 == "O" && position_3 == "O"
+       true
+    else
+       false
+    end
+  end
+
+
+  if wins.count > 0
+    return wins[0]
+  else
+    false
+  end
+end
+
+
+def full?(board)
+
+  if won?(board) == false && board.any?{|space| space == " "}
+    return false
+  else
+
+    board.any?{|space| space != " "}
+  end
+end
+
+
+def draw?(board)
+  if won?(board) == false && full?(board) == true
+    return true
+  elsif won?(board) == false && full?(board) == false
+    return false
+  elsif won?(board) == true
+    return false
+  end
+
+end
+
+
+def over?(board)
+  board.any?{|over| over == won?(board) || draw?(board) || full?(board)}
+end
+
+
+def winner(board)
+  if won?(board)
+    winChar = board[won?(board).first]
+
+  else
+    return nil
+  end
+
+end
